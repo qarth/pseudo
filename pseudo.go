@@ -10,11 +10,11 @@
 // 4. main() in C source code is really just a test ... implement in pseudo_test.go.
 
 // Package pseudo is a port of pseudo3.23 from C to Go.
-// 
+//
 // The easiest way to use this package is to call pseudo.Run(<input file>) after setting
-// the runtime context options, if desired. However it is also possible to call the 
-// individual processing functions - ReadDimacsFile, SimpleInitialization, FlowPhaseOne, 
-// RecoverFlow, Results - sequentially. 
+// the runtime context options, if desired. However it is also possible to call the
+// individual processing functions - ReadDimacsFile, SimpleInitialization, FlowPhaseOne,
+// RecoverFlow, Results - sequentially.
 package pseudo
 
 import (
@@ -601,12 +601,11 @@ type root struct {
 	end   *node
 }
 
-
 // ================ results
 
 // static void
 // checkOptimality (const uint gap)
-// Internalize "gap" as in RecoverFlow.
+// Internalize "gap" as in RecoverFlow.1
 func checkOptimality() []string {
 	// setting gap value is taken out of main() in C source code
 	var gap uint
