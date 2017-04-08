@@ -1,10 +1,18 @@
 // pseudo_test.go - test cases.
 // The principle test is C_source/pseudo.c#main()
 
-package pseudo
+package pseudo_test
 
 import (
-	"fmt"
-	"testing"
-	"time"
+	"github.com/clbanning/pseudo"
 )
+
+func init() {
+
+}
+
+func main() {
+
+	pseudo.Run("textdata.txt")
+
+}

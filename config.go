@@ -2,7 +2,7 @@
 
 package pseudo
 
-/* this is commented out unless you want to import github.com/clbanning/checkjson ...
+// this is commented out unless you want to import github.com/clbanning/checkjson ...
 import (
 	"encoding/json"
 	"fmt"
@@ -13,7 +13,7 @@ import (
 
 // Config parses a file with a JSON object with Context settings - the
 // JSON object in the file is identified by the key:value pair "config":"pseudo".
-// 
+//
 // Example:
 //	{
 //	  "config":"pseudo",
@@ -61,4 +61,3 @@ func Config(file string) error {
 	}
 	return nil
 }
-*/
