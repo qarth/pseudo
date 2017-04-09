@@ -10,7 +10,9 @@ func main() {
 	pseudo.PseudoCtx.LowestLabel = false
 	pseudo.PseudoCtx.FifoBucket = true
 
-	pseudo.Run("dimacsMaxf.txt")
+	pseudo.Run("dimacsMcf.txt")
 	fmt.Println("Finished.")
+	//ret := pseudo.Result("dimacsMcf.txt")
+	//fmt.Println(ret, "Ret = %v")
 
 }
