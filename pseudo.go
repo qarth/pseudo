@@ -804,8 +804,10 @@ func SimpleInitialization() {
 	var tempArc *arc
 
 	// debug index out of range
-	fmt.Printf("size %v \n", size)
-	fmt.Printf("source %v \n", source)
+	fmt.Printf("numArcs = %v\n", numArcs)
+	fmt.Printf("numNodes = %v\n", numNodes)
+	fmt.Printf("size = %v \n", size)
+	fmt.Printf("source = %v \n", source)
 
 	size = adjacencyList[source-1].numberOutOfTree
 	for i = 0; i < size; i++ {
