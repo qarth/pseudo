@@ -12,7 +12,7 @@ func main() {
 
 	pseudo.Run("dimacsMcf.txt")
 	fmt.Println("Finished.")
-	//ret := pseudo.Result("dimacsMcf.txt")
-	//fmt.Println(ret, "Ret = %v")
+	results := pseudo.Result("")
+	fmt.Printf("Ret = %v", results)
 
 }

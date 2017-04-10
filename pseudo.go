@@ -651,7 +651,8 @@ func checkOptimality() []string {
 	if check {
 		ret = append(ret, "c ", "c Solution checks as feasible")
 	}
-
+	fmt.Printf("Sink = %v", sink)
+	fmt.Printf("Sink -1=%v", sink-1)
 	check = true
 	if excess[sink-1] != mincut {
 		check = false

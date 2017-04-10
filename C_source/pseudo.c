@@ -895,6 +895,10 @@ checkOptimality (const uint gap)
 
 	check = 1;
 
+    printf("Sink = %d", sink)
+    printf("Sink - 1 = %d", sink-1)
+    print("excess[sink-1] = %lld", excess[sink-1])
+
 	if (excess[sink-1] != mincut) 
 	{
 		check = 0;
