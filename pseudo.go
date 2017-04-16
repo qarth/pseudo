@@ -25,6 +25,7 @@ import (
 	"os"
 	"strings"
 	"time"
+	"unicode"
 )
 
 // global variables
@@ -683,26 +684,43 @@ func displayFlow() []string {
 }
 
 // ================ public functions =====================
+type AlphaString string
+
+func (a *AlphaString) Scan(state fmt.ScanState, verb rune) error {
+	token, err := state.Token(true, unicode.IsLetter)
+	if err != nil {
+		return err
+	}
+	*a = AlphaString(token)
+	return nil
+}
 
 // ReadDimacsFile implements readDimacsFile of C source code.
 func ReadDimacsFile(fh *os.File) error {
 	var i, numLines, from, to, first, last uint
 	var capacity uint
-	var word []byte
-	var ch, ch1 byte
-
+	//var word []byte
+	var ch, word AlphaString
+	//var ch1 byte
+	var ch1 AlphaString
+	fmt.Println("Reading Dimacs\n")
 	buf := bufio.NewReader(fh)
 	var atEOF bool
 	for {
 		if atEOF {
 			break
 		}
-
+		fmt.Println("Reading line")
 		line, err := buf.ReadBytes('\n')
+		fmt.Println("Reading line 2")
 		if err != io.EOF {
-			return err
+			fmt.Println("err!=io.EOF")
+			fmt.Print(err)
+			//return err
 		} else if err == io.EOF {
+			fmt.Println("EOF")
 			if len(line) == 0 {
+				fmt.Println("EOF2")
 				break // nothing more to process
 			}
 			// ... at EOF with data but no '\n' line termination.
@@ -710,13 +728,19 @@ func ReadDimacsFile(fh *os.File) error {
 			atEOF = true
 		} else {
 			// Strip off EOL.
+			fmt.Println("Strip EOL")
 			line = line[:len(line)-1]
 		}
+		fmt.Println("numLines++")
 		numLines++
+		fmt.Printf("line = %v", string(line))
+		fmt.Printf("line[0] = %v", string(line[0]))
 
 		switch line[0] {
 		case 'p':
-			if _, err := fmt.Sscanf(string(line), "%v %s %d %d", &ch, word, &numNodes, &numArcs); err != nil {
+			fmt.Println("Case p ")
+			if _, err := fmt.Sscanf(string(line), "%v %s %d %d", &ch, &word, &numNodes, &numArcs); err != nil {
+				fmt.Println(err, ch, word, numNodes, numArcs)
 				return err
 			}
 
@@ -738,7 +762,8 @@ func ReadDimacsFile(fh *os.File) error {
 			first = 0
 			last = numArcs - 1
 		case 'a':
-			if _, err := fmt.Scanf(string(line), "%v %d %d %d", &ch, &from, &to, &capacity); err != nil {
+			fmt.Println("Case a")
+			if _, err := fmt.Sscanf(string(line), "%v %d %d %d", &ch, &from, &to, &capacity); err != nil {
 				return err
 			}
 			if (from+to)%2 != 0 {
@@ -756,19 +781,27 @@ func ReadDimacsFile(fh *os.File) error {
 			adjacencyList[from-1].numAdjacent++
 			adjacencyList[to-1].numAdjacent++
 		case 'n':
-			if _, err := fmt.Scanf(string(line), "%v  %d %v", &ch, &i, &ch1); err != nil {
+			fmt.Println("Case n")
+			if _, err := fmt.Sscanf(string(line), "%v %d %v", &ch, &i, &ch1); err != nil {
+				fmt.Println(err, ch, i, ch1)
 				return err
 			}
-			if ch1 == 's' {
+			fmt.Println(ch, i, ch1)
+			//ch1 = string(ch1)
+			if ch1 == AlphaString('s') {
+				fmt.Println("Found a source")
 				source = i
-			} else if ch1 == 't' {
+			} else if ch1 == AlphaString('t') {
+				fmt.Println("Found a sink")
 				sink = i
 			} else {
 				return fmt.Errorf("unrecognized character %v on line %d", ch1, numLines)
 			}
 		case '\n', 'c':
+			fmt.Println("Case newline or comment")
 			continue // catches blank lines and "comment" lines - blank lines not in spec.
 		default:
+			fmt.Println("Case default")
 			return fmt.Errorf("unknown data: %s", string(line))
 		}
 	}

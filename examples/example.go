@@ -2,15 +2,15 @@ package main
 
 import (
 	"fmt"
-	"github.com/qarth/pseudo2"
+	"github.com/qarth/pseudo"
 )
 
 func main() {
 	fmt.Println("Starting...")
-	pseudo.PseudoCtx.LowestLabel = false
+	pseudo.PseudoCtx.LowestLabel = true
 	pseudo.PseudoCtx.FifoBucket = true
 
-	results, err := pseudo.Run("dimacsMaxf.txt")
+	results, err := pseudo.Run("/home/rob/go/src/github.com/qarth/pseudo/examples/dimacsMaxf.txt")
 
 	if err != nil {
 		fmt.Printf("%v", err)
